@@ -1,0 +1,4 @@
+FROM phusion/baseimage:18.04-1.0.0
+ADD image /build
+
+RUN chmod +x /build/install_packages.sh && /build/install_packages.sh

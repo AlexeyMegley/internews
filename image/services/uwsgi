@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+if [[ $DJANGO_DEBUG != 'True' ]]
+then
+exec /usr/local/bin/uwsgi --ini /app/internews_web/uwsgi.ini
+else
+exec /sbin/setuser www-data /usr/bin/python3 /app/internews_web/manage.py runserver 0.0.0.0:8080
+fi

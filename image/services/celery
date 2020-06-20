@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+cd /app/internews_web
+exec /sbin/setuser www-data python3 runcelery.py worker $CELERY_ARGS

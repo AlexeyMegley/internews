@@ -1,0 +1,17 @@
+FROM internews/base
+
+WORKDIR /app
+ADD . /app/
+ADD image /build
+
+ENV DJANGO_STATIC=/app-data/static \
+    DJANGO_MEDIA=/app-data/media \
+    DJANGO_SECRET=secret_key
+
+RUN chmod +x /build/install_configs.sh && \
+    /build/install_configs.sh && \
+    mkdir /app-data && \
+    mkdir /app-data/media && \
+    chown www-data:www-data /app-data/media
+
+WORKDIR /app/internews_web
