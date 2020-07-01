@@ -1,4 +1,7 @@
 FROM phusion/baseimage:18.04-1.0.0
+
+WORKDIR /app
+ADD . /app/
 ADD image /build
 
-RUN chmod +x /build/install_packages.sh && /build/install_packages.sh
+RUN chmod +x /build/install_packages.sh /build/start_celery.sh /build/install_configs.sh && /build/install_packages.sh
