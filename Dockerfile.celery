@@ -1,1 +1,4 @@
 FROM internews/base
+WORKDIR /app/internews_web
+
+CMD /build/start_celery.sh
