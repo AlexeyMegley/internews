@@ -1,27 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&display=swap');
 
+
 html {
   position: relative;
   min-height: 100%;
 }
 
 .navbar {
-  background-image: url("http://127.0.0.1:8080/static/news/navbar_background.jpg") !important;
+  background-image: url("/static/news/navbar_background.jpg");
   background-position: center center;
   background-repeat: no-repeat;
 }
 
 .navbar-brand{
   color: #f0f2f5 !important;
-  font-family: Montserrat Subrayada !important;
+  font-family: Montserrat Subrayada;
   font-size: 22px;
 }
 
 .nav-link {
   color: #f0f2f5 !important;
-  font-weight: 600 !important;
+  font-weight: 600;
   font-size: 14px;
-  font-stretch:ultra-expanded !important;
+  font-stretch:ultra-expanded;
   letter-spacing: 1px;
 }
 
@@ -35,7 +36,7 @@ body {
     bottom: 0;
     width: 100%;
     eight: 60px;
-    background-image: url("http://127.0.0.1:8080/static/news/navbar_background.jpg") !important;
-    color: #f0f2f5 !important;
+    background-image: url("/static/news/navbar_background.jpg");
+    color: #f0f2f5;
 }
 
