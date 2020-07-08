@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET', 'key')
 DEBUG = boolean_env("DJANGO_DEBUG")
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -136,6 +136,9 @@ timezone.activate(pytz.timezone('Europe/Moscow'))
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
