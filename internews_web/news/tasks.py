@@ -1,6 +1,7 @@
-from internews_web.celery import app
 from logging import getLogger
 
+from internews_web.celery import app
+from .services import save_article
 
 logger = getLogger(__name__)
 
@@ -9,3 +10,4 @@ logger = getLogger(__name__)
 def parse():
     logger.info("Test parsing...")
     print("Test parsing...")
+
