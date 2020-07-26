@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from urllib.parse import urljoin
+from .url_resolvers import UrlParser
 
 
 active_locators = []
@@ -18,7 +18,7 @@ class BaseLocator(ABC):
 
     @classmethod
     def get_full_news_path(cls):
-        return urljoin(cls.BASE_URL, cls.NEWS_URL_PATH)
+        return UrlParser.join_urls(cls.BASE_URL, cls.NEWS_URL_PATH)
 
     @abstractmethod
     def get_raw_headline(self, article) -> str:
@@ -43,9 +43,9 @@ class BaseLocator(ABC):
         return self.handle_headline(raw_headline)
 
     def ensure_url_is_absolute(self, url):
-        if 'https:' not in url and 'http:' not in url:
-            return urljoin(self.BASE_URL, url)
-        return url
+        if UrlParser.url_is_absolute(url):
+            return url
+        return UrlParser.join_urls(self.BASE_URL, url)
 
 
 @register_locator
@@ -54,10 +54,10 @@ class RussiaTodayLocator(BaseLocator):
     NEWS_SELECTOR = 'div.card__heading.card__heading_main-news a'
 
     def get_raw_link(self, article):
-        return article.get('href').strip()
+        return article.get('href')
 
     def get_raw_headline(self, article):
-        return article.string.strip()
+        return article.string
 
 
 @register_locator
@@ -66,10 +66,10 @@ class RiaLocator(BaseLocator):
     NEWS_SELECTOR = 'span.elem-info__share .share'
 
     def get_raw_link(self, article):
-        return article.get('data-url').strip()
+        return article.get('data-url')
 
     def get_raw_headline(self, article):
-        return article.get('data-title').strip()
+        return article.get('data-title')
 
 
 @register_locator
@@ -79,10 +79,10 @@ class RainLocator(BaseLocator):
     NEWS_SELECTOR = 'h3 a'
 
     def get_raw_link(self, article):
-        return article.get('href').strip()
+        return article.get('href')
 
     def get_raw_headline(self, article):
-        return article.string.strip()
+        return article.string
 
 
 @register_locator
@@ -91,10 +91,10 @@ class FoxNewsLocator(BaseLocator):
     NEWS_SELECTOR = 'h2.title.title-color-default a'
 
     def get_raw_link(self, article):
-        return article.get('href').strip()
+        return article.get('href')
 
     def get_raw_headline(self, article):
-        return article.string.strip()
+        return article.string
 
 
 @register_locator
@@ -103,10 +103,10 @@ class WashingtonPostLocator(BaseLocator):
     NEWS_SELECTOR = 'h2.headline.xx-small.normal-style.text-align-inherit a'
 
     def get_raw_link(self, article):
-        return article.get('href').strip()
+        return article.get('href')
 
     def get_raw_headline(self, article):
-        return article.string.strip()
+        return article.string
 
 
 @register_locator
@@ -115,7 +115,7 @@ class BbcLocator(BaseLocator):
     NEWS_SELECTOR = 'h3.media__title a.media__link'
 
     def get_raw_link(self, article):
-        return article.get('href').strip()
+        return article.get('href')
 
     def get_raw_headline(self, article):
-        return article.string.strip()
+        return article.string
