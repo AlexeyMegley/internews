@@ -1,11 +1,37 @@
-from internews_web.celery import app
 from logging import getLogger
 
+from internews_web.celery import app
+from .parsers import BaseStaticParser
+from .locators import active_locators
+from .services import save_article
 
 logger = getLogger(__name__)
 
 
 @app.task
-def parse():
-    logger.info("Test parsing...")
-    print("Test parsing...")
+def parse_static_websites():
+    logger.info("Start parsing...")
+    failed_urls = []
+    for locator_cls in active_locators:
+        current_url, link, headline = locator_cls.get_full_news_path(), "", ""
+        logger.info(f"Start parsing '{current_url}' with '{locator_cls.__name__}'")
+        try:
+            base_static_parser = BaseStaticParser(locator_cls())
+            for link, headline in base_static_parser.get_articles_data():
+                save_article(link, headline)
+        except:
+            logger.exception(f"Exception occurred while parsing '{current_url}'!\n"
+                             f"Link: '{link}', headline: '{headline}'")
+            failed_urls.append(current_url)
+
+    successful_urls = [locator_cls.get_full_news_path() for locator_cls in active_locators
+                       if locator_cls.get_full_news_path() not in failed_urls]
+    report_msg = f"Parsing was finished!\n" \
+                 f"Successfully parsed urls: {successful_urls}\n" \
+                 f"Failed urls: {failed_urls}"
+
+    if failed_urls:
+        logger.error("Attention! Some urls haven't been parsed!")
+        logger.error(report_msg)
+    else:
+        logger.info(report_msg)
