@@ -20,27 +20,41 @@
     <a class="navbar-brand" href="#">Inter News</a>
     <ul class="navbar-nav mr-auto ml-auto mt-2 mt-lg-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">В мире</a>
+        <a class="nav-link" href="/">В мире</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/russia">Россия</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Россия</a>
+        <a class="nav-link" href="/usa">США</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">США</a>
+        <a class="nav-link" href="/china">Китай</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Китай</a>
+        <a class="nav-link" href="/australia">Австралия</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Австралия</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Другие страны</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Другие страны
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Белорусия</a>
+          <a class="dropdown-item" href="#">Казахстан</a>
+          <a class="dropdown-item" href="#">Украина</a>
+        </div>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
+      {% if '/' == request.path %}
+      <a class="nav-link" href="/en">en</a>
       <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
       <button class="btn btn-sm btn-outline-light my-2 my-sm-0" type="submit">Go</button>
+      {% else %}
+      <a class="nav-link" href="/">ru</a>
+      <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+      <button class="btn btn-sm btn-outline-light my-2 my-sm-0" type="submit">Go</button>
+      {% endif %}
     </form>
   </div>
 </nav>
