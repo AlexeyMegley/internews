@@ -3,7 +3,7 @@ from logging import getLogger
 from .models import Country, Media, Article
 from translations.models import Language, TranslatedHeader
 from .url_resolvers import UrlParser
-
+from .locators import *
 
 logger = getLogger(__name__)
 
@@ -16,9 +16,8 @@ def save_article(article_url: str, article_header: str):
         logger.exception(f"Exception occurred while getting media by url {article_url}")
         raise
     else:
-        article, created = Article.objects.get_or_create(media=media, relative_url=url_parser.get_relative_url())
-        if created:
-            header = TranslatedHeader.objects.create(header=article_header, language=media.language)
-            article.header = header
+        header = TranslatedHeader.objects.create(header=article_header, language=media.language)
+        header.save()
+        article, created = Article.objects.get_or_create(media=media, relative_link=url_parser.get_relative_url(),
+                                                         header=header)
         article.save()
-        # add translations if necessary

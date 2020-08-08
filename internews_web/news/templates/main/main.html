@@ -1,11 +1,15 @@
 {% extends "main/base.html" %}
+{% load static %}
 {% block content %}
 <br><br><br>
 <div class="container">
     <div class="row">
     <div class="col-sm-2">
-        <section class="sticky-top" style="top: 70px;"><p>World time API</p></section></div>
-    <div>
+        <section class="sticky-top" style="top: 70px;">
+            <p>world time</p>
+        </section>
+    </div>
+    <div class="col-sm-8">
     {% for article in articles %}
         <a href={{article.relative_link}} class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">

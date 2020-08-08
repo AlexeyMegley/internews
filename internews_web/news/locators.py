@@ -9,6 +9,7 @@ def register_locator(cls):
     is_abstract = hasattr(cls, "__abstractmethods__") and len(cls.__abstractmethods__)
     if cls not in active_locators and not is_abstract:
         active_locators.append(cls)
+    return cls
 
 
 class BaseLocator(ABC):

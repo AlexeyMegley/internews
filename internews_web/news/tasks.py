@@ -1,8 +1,8 @@
 from logging import getLogger
 
 from internews_web.celery import app
-from .parsers import BaseStaticParser
 from .locators import active_locators
+from .parsers import BaseStaticParser
 from .services import save_article
 
 logger = getLogger(__name__)
