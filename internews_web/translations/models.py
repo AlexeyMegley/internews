@@ -10,9 +10,9 @@ class Language(models.Model):
 
 
 class TranslatedHeader(models.Model):
-    header = models.TextField()
+    text = models.TextField(unique=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    # translations = models.ManyToManyField("self")
+    translations = models.ManyToManyField("self")
 
     def __str__(self):
-        return f"{self.header} ({self.language})"
+        return f"{self.text} ({self.language})"

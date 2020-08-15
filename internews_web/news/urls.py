@@ -2,6 +2,7 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path('1/', views.russia),
-    path('2/', views.usa),
+    path('', views.main),
+    path("country/<int:country_id>/", views.main),
+    path("country/<int:country_id>/media/<int:media_id>/", views.main),
 ]

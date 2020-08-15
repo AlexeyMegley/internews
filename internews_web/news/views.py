@@ -1,14 +1,16 @@
 from django.shortcuts import render
-from .models import Article
+from .services import get_news_data
 
 
 def main(request):
-    return render(request, 'main/main.html', context={'articles': Article.objects.all()})
+    news_data = get_news_data(10, 'ru')
+    return render(request, 'news/main.html', context={'countries': news_data})
 
 
-def russia(request):
-    return render(request, 'main/main.html', context={'articles': Article.objects.filter(media__country__id='1')})
+def get_country(request, country_id):
+
+    return
 
 
-def usa(request):
-    return render(request, 'main/main.html', context={'articles': Article.objects.filter(media__country__id='2')})
+def get_media(request, country_id, media_id):
+    return

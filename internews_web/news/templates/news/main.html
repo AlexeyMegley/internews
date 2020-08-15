@@ -1,0 +1,28 @@
+{% extends "news/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for country in countries %}
+            <div class="col-6 news-column">
+                <h4 class="country-name">
+                    <img src="{{ country.flag }}">
+                    {{ country.name }}
+                </h4>
+                <hr>
+                {% for article in country.articles %}
+                    <small>
+                        <img class="logo" src="{{ article.media.logo }}">
+                        {{ article.media.name }}
+                    </small>
+                    <small>{{ article.created_time|slice:"0:16" }} </small>
+                    <a href="{{article.url}}" target="_blank">
+                        <h6>{{ article.header }}</h6>
+                    </a>
+                    <hr>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -5,5 +5,5 @@ if [[ $DJANGO_DEBUG != 'True' ]]
 then
 exec /usr/sbin/nginx -c /etc/nginx/nginx.conf -g "daemon off;"
 else
-exec /sbin/setuser www-data /usr/bin/python3 /app/manage.py runserver 0.0.0.0:8080
+exec /sbin/setuser www-data /usr/bin/python3 /app/internews_web/manage.py runserver 0.0.0.0:8080
 fi

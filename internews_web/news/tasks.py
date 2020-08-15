@@ -18,7 +18,7 @@ def parse_static_websites():
         try:
             base_static_parser = BaseStaticParser(locator_cls())
             for link, headline in base_static_parser.get_articles_data():
-                save_article(link, headline)
+                save_article(link, headline, locator_cls.__name__)
         except:
             logger.exception(f"Exception occurred while parsing '{current_url}'!\n"
                              f"Link: '{link}', headline: '{headline}'")

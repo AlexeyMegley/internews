@@ -1,5 +1,6 @@
-<!DOCTYPE html>
+{% load i18n %}
 {% load static %}
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -8,10 +9,10 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href='{% static "news/css/style.css" %}'>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
+<nav class="navbar navbar-background navbar-expand-lg navbar-light fixed-top">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -22,45 +23,46 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">В мире</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="countries/1">Россия</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/countries/2">США</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="countries/3">Китай</a>
-      </li>
-        <a class="nav-link" href="countries/4">Австралия</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Другие страны
+      {% for country in countries %}
+      <li class="nav-item active dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown"
+        role="button" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+          {{ country.name }}
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Белорусия</a>
-          <a class="dropdown-item" href="#">Казахстан</a>
-          <a class="dropdown-item" href="#">Украина</a>
+        <div class="dropdown-menu medias" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/country/{{ country.id }}/">Everything</a>
+          <div class="dropdown-divider"></div>
+          {% for media in country.medias %}
+            <a class="dropdown-item" href="/country/{{ country.id }}/media/{{ media.id }}/">{{ media.name }}</a>
+          {% endfor %}
         </div>
       </li>
+      {% endfor %}
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      {% if '/' == request.path %}
-      <a class="nav-link" href="/en">en</a>
       <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
       <button class="btn btn-sm btn-outline-light my-2 my-sm-0" type="submit">Go</button>
-      {% else %}
-      <a class="nav-link" href="/">ru</a>
-      <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
-      <button class="btn btn-sm btn-outline-light my-2 my-sm-0" type="submit">Go</button>
-      {% endif %}
     </form>
   </div>
 </nav>
 {% block content %}
 {% endblock %}
-<footer id="footer" class="footer navbar-fixed-bottom">
-  <div class="footer-copyright text-center py-3">Develop with love 2020</div>
+<div class="row bottom-info navbar-background">
+  <div class="col col-4">
+    <h6>Developed with love :-)</h6>
+  </div>
+  <div class="col col-4">
+  </div>
+  <div class="col col-4">
+    <h6>Designed by Dmitriy Chavdar & Alexey Megley, 2020</h6>
+  </div>
+</div>
+
+<footer class="fixed-bottom">
+  <div class="footer-copyright text-center py-3">
+    <a href="#"><img src='{% static "news/img/arrow-thick-top.svg" %}'>Наверх</a>
+  </div>
 </footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

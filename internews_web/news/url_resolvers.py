@@ -27,3 +27,6 @@ class UrlParser:
     def get_base_url(self):
         return f"{self.url_data.scheme}://{self.get_netloc()}"
 
+    def get_absolute_url(self):
+        return f"{self.url_data.scheme}://{self.get_netloc()}{self.url_data.path}"
+
