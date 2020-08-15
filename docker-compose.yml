@@ -21,7 +21,7 @@ services:
     volumes:
       - /var/internews:/app-data
       - .:/app
-    environment:
+    env_file:
       - vars.env
     links:
       - postgres

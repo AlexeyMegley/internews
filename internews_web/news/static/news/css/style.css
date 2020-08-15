@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&family=PT+Sans&display=swap');
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  height: 89vh;
+  background: #212529;
+}
+
+.navbar-background {
+  background-color: chocolate;
+}
+
+.navbar .navbar-collapse .navbar-brand{
+  color: #f0f2f5;
+  font-family: Montserrat Subrayada;
+  font-size: 22px;
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+  color: #f0f2f5;
+  font-weight: 600;
+  font-size: 1.1rem;
+  font-stretch: ultra-expanded;
+  letter-spacing: 1px;
+}
+
+.navbar .navbar-nav .nav-item .nav-link:hover, .navbar .navbar-brand:hover {
+  color: #212529;
+}
+
+.container {
+  margin-top: 5%;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  color: white;
+  font-family: 'PT Sans', sans-serif;
+}
+
+// TODO - replace with static tag
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  color: #f0f2f5;
+}
+
+.bottom-info {
+  margin-top: 3%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 3vh;
+  height: 8vh;
+  width: 100%;
+  color: white;
+  text-align: center;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.country-name {
+  margin-bottom: 10%;
+}
+
+.news-column {
+  padding: 3% 5% 5% 5%;
+}
+
+.news-column .country-name {
+  text-align: center;
+}
+
+.news-column a {
+  color: peru;
+}
+
+.news-column hr {
+  background-color: gray;
+}
+
+.news-column .logo {
+  width: 24px;
+  height: 24px;
+}
+
+.fixed-bottom .footer-copyright a {
+  color: white;
+}
+
+.medias .dropdown-item:hover {
+  color: white;
+  background-color: #212529;
+}
+

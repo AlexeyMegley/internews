@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from celery.schedules import crontab
 import pytz
 
@@ -45,12 +46,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'news'
+    'rest_framework',
+    'news',
+    'translations'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -71,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n'
             ],
         },
     },
@@ -116,8 +121,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGES = (
-    ('ru', 'Russian'),
+    ('ru', _('Russian')),
+    ('en', _('English')),
 )
+
 DEFAULT_LANGUAGE = 0
 LANGUAGE_CODE = 'ru'
 
@@ -139,6 +146,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+MEDIA_ROOT = '/app-data/media'
+MEDIA_URL = '/media/'
+
+REST_FRAMEWORK = {
+    # 'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S.%fZ",
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
+}
 
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
