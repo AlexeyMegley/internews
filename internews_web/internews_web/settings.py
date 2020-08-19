@@ -168,3 +168,32 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab()
     }
 }
+
+MAILER_LIST = os.environ.get("MAILER_LIST")
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_handler': {
+            'class': 'logging.handlers.SMTPHandler',
+            'level': 'DEBUG',
+            'mailhost': (EMAIL_HOST, EMAIL_PORT),
+            'fromaddr': 'internews1749@gmail.com',
+            'toaddrs': MAILER_LIST,
+            'subject': 'An error occurred while parsing site!',
+            'credentials': (EMAIL_HOST_USER, EMAIL_HOST_PASSWORD),
+            'secure': ''
+        }
+    },
+    'loggers': {
+        'news.services': {
+            'level': 'DEBUG',
+            'handlers': ['mail_handler']
+        }
+    },
+}
