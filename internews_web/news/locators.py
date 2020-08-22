@@ -49,6 +49,8 @@ class BaseLocator(ABC):
         return UrlParser.join_urls(self.BASE_URL, url)
 
 
+# Russia Federation news media
+
 @register_locator
 class RussiaTodayLocator(BaseLocator):
     BASE_URL = 'https://russian.rt.com/'
@@ -86,6 +88,8 @@ class RainLocator(BaseLocator):
         return article.string
 
 
+# USA news media
+
 @register_locator
 class FoxNewsLocator(BaseLocator):
     BASE_URL = 'https://www.foxnews.com/'
@@ -114,6 +118,44 @@ class WashingtonPostLocator(BaseLocator):
 class BbcLocator(BaseLocator):
     BASE_URL = 'https://www.bbc.com/'
     NEWS_SELECTOR = 'h3.media__title a.media__link'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+# Turkey news media
+
+@register_locator
+class IHALocator(BaseLocator):
+    BASE_URL = 'http://www.iha.com.tr/'
+    NEWS_SELECTOR = 'a.s-item2.std'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('title')
+
+
+@register_locator
+class DailySabahLocator(BaseLocator):
+    BASE_URL = 'https://www.dailysabah.com/'
+    NEWS_SELECTOR = 'div h3 a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class SolGazeteLocator(BaseLocator):
+    BASE_URL = 'https://sol.org.tr/bugun'
+    NEWS_SELECTOR = 'div.ckewidgets-title p a'
 
     def get_raw_link(self, article):
         return article.get('href')
