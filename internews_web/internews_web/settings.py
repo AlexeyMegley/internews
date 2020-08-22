@@ -192,7 +192,7 @@ LOGGING = {
     },
     'loggers': {
         'news.services': {
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'handlers': ['mail_handler']
         }
     },
