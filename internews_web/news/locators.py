@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from .url_resolvers import UrlParser
 
-
 active_locators = []
 
 
@@ -50,7 +49,6 @@ class BaseLocator(ABC):
 
 
 # Russia Federation news media
-
 @register_locator
 class RussiaTodayLocator(BaseLocator):
     BASE_URL = 'https://russian.rt.com/'
@@ -89,7 +87,6 @@ class RainLocator(BaseLocator):
 
 
 # USA news media
-
 @register_locator
 class FoxNewsLocator(BaseLocator):
     BASE_URL = 'https://www.foxnews.com/'
@@ -127,7 +124,6 @@ class BbcLocator(BaseLocator):
 
 
 # Turkey news media
-
 @register_locator
 class IHALocator(BaseLocator):
     BASE_URL = 'http://www.iha.com.tr/'
@@ -156,6 +152,104 @@ class DailySabahLocator(BaseLocator):
 class SolGazeteLocator(BaseLocator):
     BASE_URL = 'https://sol.org.tr/bugun'
     NEWS_SELECTOR = 'div.ckewidgets-title p a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+# Australia news media
+@register_locator
+class SkyNewsLocator(BaseLocator):
+    BASE_URL = 'https://www.skynews.com.au/'
+    NEWS_SELECTOR = 'div.col-sm-12.col-xs-12.p-a-0.item-wrapper a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('aria-label')
+
+
+@register_locator
+class TheWeekendAustralianLocator(BaseLocator):
+    BASE_URL = 'https://www.theaustralian.com.au/'
+    NEWS_SELECTOR = 'h3.story-block__heading a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+# Germany news media
+@register_locator
+class DeutschlandLocator(BaseLocator):
+    BASE_URL = 'https://www.deutschland.de/en/news'
+    NEWS_SELECTOR = 'h3.typoHm a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class DerTagesspigelLocator(BaseLocator):
+    BASE_URL = 'https://www.tagesspiegel.de/'
+    NEWS_SELECTOR = 'li h2 a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('title')
+
+
+@register_locator
+class WeltDeLocator(BaseLocator):
+    BASE_URL = 'https://www.welt.de/'
+    NEWS_SELECTOR = 'div div h4 a.o-link.o-teaser__link.o-teaser__link--is-headline'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('title')
+
+
+# France news media
+@register_locator
+class LadepecheLocator(BaseLocator):
+    BASE_URL = 'https://www.ladepeche.fr/'
+    NEWS_SELECTOR = 'div h2 a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class TheParisStarLocator(BaseLocator):
+    BASE_URL = 'https://www.parisstaronline.com/'
+    NEWS_SELECTOR = 'h4 a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+class TheParisLocator(BaseLocator):
+    BASE_URL = 'https://theparisnews.com/news/'
+    NEWS_SELECTOR = 'div.card-body div.card-headline h3.tnt-headline a'
 
     def get_raw_link(self, article):
         return article.get('href')
