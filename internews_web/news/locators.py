@@ -256,3 +256,77 @@ class TheParisLocator(BaseLocator):
 
     def get_raw_headline(self, article):
         return article.string
+
+# Canada news media
+
+@register_locator
+class WindsorStarLocator(BaseLocator):
+    BASE_URL = 'https://windsorstar.com/'
+    NEWS_SELECTOR = 'div a.article-card__link'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('aria-label')
+
+
+@register_locator
+class TorontoSunLocator(BaseLocator):
+    BASE_URL = 'https://torontosun.com/'
+    NEWS_SELECTOR = 'div a.article-card__link'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('aria-label')
+
+
+@register_locator
+class NationalPostLocator(BaseLocator):
+    BASE_URL = 'https://nationalpost.com/'
+    NEWS_SELECTOR = 'div a.article-card__link'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('aria-label')
+
+# China news media
+
+@register_locator
+class EnPeopleLocator(BaseLocator):
+    BASE_URL = 'http://en.people.cn/'
+    NEWS_SELECTOR = 'div.p1_1 b a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class XinLocator(BaseLocator):
+    BASE_URL = 'http://www.xinhuanet.com/english/world/'
+    NEWS_SELECTOR = 'div.bottom-dashed div h2 a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class GlobalTimesLocator(BaseLocator):
+    BASE_URL = 'https://www.globaltimes.cn/'
+    NEWS_SELECTOR = 'div.row-content.topnews div.row-content a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
