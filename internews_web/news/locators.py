@@ -257,8 +257,8 @@ class TheParisLocator(BaseLocator):
     def get_raw_headline(self, article):
         return article.string
 
-# Canada news media
 
+# Canada news media
 @register_locator
 class WindsorStarLocator(BaseLocator):
     BASE_URL = 'https://windsorstar.com/'
@@ -294,8 +294,8 @@ class NationalPostLocator(BaseLocator):
     def get_raw_headline(self, article):
         return article.get('aria-label')
 
-# China news media
 
+# China news media
 @register_locator
 class EnPeopleLocator(BaseLocator):
     BASE_URL = 'http://en.people.cn/'
@@ -324,6 +324,68 @@ class XinLocator(BaseLocator):
 class GlobalTimesLocator(BaseLocator):
     BASE_URL = 'https://www.globaltimes.cn/'
     NEWS_SELECTOR = 'div.row-content.topnews div.row-content a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+# Japan news media
+@register_locator
+class KyodoNewsLocator(BaseLocator):
+    BASE_URL = 'https://english.kyodonews.net/'
+    NEWS_SELECTOR = 'ul.headlines li a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class JapanTodayLocator(BaseLocator):
+    BASE_URL = 'https://japantoday.com/'
+    NEWS_SELECTOR = 'div.media-body p a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.get('title')
+
+
+@register_locator
+class SNALocator(BaseLocator):
+    BASE_URL = 'http://shingetsunewsagency.com/category/international/'
+    NEWS_SELECTOR = 'div h2 a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+# South Korea news media
+@register_locator
+class KoreaTimesLocator(BaseLocator):
+    BASE_URL = 'https://www.koreatimes.co.kr/www2/index.asp'
+    NEWS_SELECTOR = 'div.index_contents_left div.index_more_headline.HD a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class VOPLocator(BaseLocator):
+    BASE_URL = 'https://www.vop.co.kr/index.html'
+    NEWS_SELECTOR = 'div h4 a'
 
     def get_raw_link(self, article):
         return article.get('href')
