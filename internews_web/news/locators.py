@@ -392,3 +392,40 @@ class VOPLocator(BaseLocator):
 
     def get_raw_headline(self, article):
         return article.string
+
+
+# UK news media
+@register_locator
+class DailyMailLocator(BaseLocator):
+    BASE_URL = 'https://www.dailymail.co.uk/home/index.html'
+    NEWS_SELECTOR = 'div h2 a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class NewsNowLocator(BaseLocator):
+    BASE_URL = 'https://www.newsnow.co.uk/h/'
+    NEWS_SELECTOR = 'div a.hll'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
+
+
+@register_locator
+class FTLocator(BaseLocator):
+    BASE_URL = 'https://www.ft.com/'
+    NEWS_SELECTOR = 'div.o-teaser__heading a'
+
+    def get_raw_link(self, article):
+        return article.get('href')
+
+    def get_raw_headline(self, article):
+        return article.string
