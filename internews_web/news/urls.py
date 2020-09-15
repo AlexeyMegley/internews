@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.main),
     path("country/<int:country_id>/", views.main),
     path("country/<int:country_id>/media/<int:media_id>/", views.main),
+    path("search/", views.search),
 ]

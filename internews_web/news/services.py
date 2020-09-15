@@ -148,3 +148,60 @@ def shuffle_articles(articles: [list], limit: int) -> list:
         article_number += 1
 
     return shuffled_articles
+
+
+def get_search_data(request, articles_limit: int, language_code: str):
+    """
+        :param articles_limit: amount of articles attached to country
+        :param language_code: language code
+        :return:
+        [
+            country1: {
+               medias: [
+                       {
+                           articles: [article1, article2...],
+                           name: ...,
+                           <other media fields>
+                       },
+                       {
+                           articles: [article1, article2...],
+                           name: ...,
+                           <other media fields>
+                       }
+               ],
+               articles: [article1, article2...],
+               name: country_name,
+               flag: country_flag
+            },
+            country2: {
+                ...
+            },
+            ...
+        ]
+        """
+    assert articles_limit > 0, "Limit should be positive integer!"
+
+    media_pk_to_articles = defaultdict(list)
+    country_pk_to_medias = defaultdict(list)
+    for article in Article.objects.filter(header__text__icontains=request.GET.get('search_queryset')):
+        serialized_article = ArticleSerializer(article).data
+        media_pk_to_articles[article.media.pk].append(serialized_article)
+
+    for media in Media.objects.all():
+        serialized_media = MediaSerializer(media).data
+        media_articles = media_pk_to_articles.get(media.pk, [])
+        serialized_media['articles'] = media_articles
+        country_pk_to_medias[media.country.pk].append(serialized_media)
+
+    result_data = []
+    for country in Country.objects.all():
+        serialized_country = CountrySerializer(country).data
+        country_medias = country_pk_to_medias.get(country.pk, [])
+        serialized_country['medias'] = country_medias
+
+        articles = [media['articles'] for media in country_medias]
+        serialized_country['articles'] = shuffle_articles(articles,
+                                                          articles_limit)
+        result_data.append(serialized_country)
+
+    return result_data
