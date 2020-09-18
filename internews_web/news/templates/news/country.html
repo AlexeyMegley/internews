@@ -2,8 +2,26 @@
 {% load static %}
 {% block content %}
 <div class="container">
-    <div class="row">
-        <h2>COUNTRY</h2>
+    <h2 class="country-name">
+        <img src="{{ country.flag }}">
+        {{ country.name }}
+    </h2>
+    <!-- All medias here, all articles below -->
+    {% for media in country.medias %}
+    <div class="media-container">
+        <h4>
+            <img class="logo" src="{{ media.logo }}">
+            {{ media.name }}
+        </h4>
+        {% for article in media.articles %}
+            <div class="row">
+                <small>{{ article.created_time|slice:"0:16" }} </small>
+                <a href="{{article.url}}" target="_blank">
+                    <h6>{{ article.header }}</h6>
+                </a>
+            </div>
+        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
