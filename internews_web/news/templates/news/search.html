@@ -2,11 +2,10 @@
 {% load static %}
 {% block content %}
 <div class="container">
-    <h2 class="media-name">
-        <img src="{{ media.logo }}">
-        {{ media.name }}
+    <h2 class="search_string">
+        Articles containing: "{{ search_string }}"
     </h2>
-    {% for article in media.articles %}
+    {% for article in articles %}
         <div class="row">
             <small>{{ article.created_time|slice:"0:16" }} </small>
             <a href="{{article.url}}" target="_blank">

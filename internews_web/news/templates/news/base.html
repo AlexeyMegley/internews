@@ -40,8 +40,8 @@
       </li>
       {% endfor %}
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control form-control-sm mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" method="GET" action="/search">
+      <input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Поиск" name="search_string">
       <button class="btn btn-sm btn-outline-light my-2 my-sm-0" type="submit">Go</button>
     </form>
   </div>

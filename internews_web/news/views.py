@@ -1,5 +1,17 @@
 from django.shortcuts import render
-from .services import get_news_data, get_country_data, get_media_data
+from django.http import Http404
+from .services import get_news_data, get_country_data, get_media_data, \
+    get_search_data
+
+
+def search(request):
+    if 'search_string' in request.GET:
+        search_string = request.GET['search_string']
+        search_data = get_search_data(search_string, 'ru')
+        return render(request, 'news/search.html',
+                      context={'articles': search_data,
+                               'search_string': search_string})
+    return Http404("Nothing to search")
 
 
 def main(request):

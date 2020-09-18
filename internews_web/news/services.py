@@ -1,6 +1,5 @@
-from collections import defaultdict
+from django.db.models import Q
 from logging import getLogger
-from random import shuffle
 
 from .models import Country, Media, Article
 from translations.models import Language, TranslatedHeader
@@ -131,7 +130,7 @@ def get_country_data(country_id: int, articles_limit: int,
 
 
 def get_media_data(media_id: int, articles_limit: int,
-                     language_code: str) -> dict:
+                   language_code: str) -> dict:
     """
     :param media_id:
     :param articles_limit:
@@ -164,3 +163,29 @@ def get_media_data(media_id: int, articles_limit: int,
     serialized_media['articles'] = serialized_articles
     return serialized_media
 
+
+def get_search_data(search_string: str, language_code: str) -> list:
+    """
+        :param search_string: search pattern
+        :param language_code: language code
+        :return:
+        [
+            article1,
+            article2,
+            ...
+        ]
+        """
+    assert search_string, "Search string cant be empty!"
+
+    search_string = search_string.lower()
+    translations = TranslatedHeader.objects.filter(text__icontains=search_string)
+    header_text_condition = Q(header__text__icontains=search_string)
+    translations_condition = Q(header__in=translations)
+    articles = Article.objects.select_related('header', 'media',
+                                              'media__country',
+                                              'media__language',
+                                              'media__website')\
+        .filter(header_text_condition | translations_condition)
+
+    serialized_articles = ArticleSerializer(articles, many=True).data
+    return serialized_articles
