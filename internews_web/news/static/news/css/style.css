@@ -82,9 +82,13 @@ body {
   background-color: gray;
 }
 
-.news-column .logo {
+.logo {
   width: 24px;
   height: 24px;
+}
+
+.fixed-bottom .footer-copyright {
+  background-color: chocolate;
 }
 
 .fixed-bottom .footer-copyright a {
@@ -96,3 +100,22 @@ body {
   background-color: #212529;
 }
 
+.main-title {
+  text-align: center;
+  margin-bottom: 3%;
+}
+
+.main-container {
+  padding: 5%;
+  min-height: 76vh;
+  margin-bottom: 10vh;
+}
+
+.main-container .unit-row .date {
+  padding-right: 2%;
+}
+
+.intermediate-container {
+  margin-bottom: 2%;
+  line-break: loose;
+}

@@ -1,21 +1,21 @@
 {% extends "news/base.html" %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <h2 class="country-name">
-        <img src="{{ country.flag }}">
+<div class="container main-container">
+    <h2 class="main-title">
+        <img src="{{ country.flag }}" title="{{ country.name }}">
         {{ country.name }}
     </h2>
     <!-- All medias here, all articles below -->
     {% for media in country.medias %}
-    <div class="media-container">
+    <div class="intermediate-container">
         <h4>
-            <img class="logo" src="{{ media.logo }}">
+            <img class="logo" src="{{ media.logo }}" title="{{ media.name }}">
             {{ media.name }}
         </h4>
         {% for article in media.articles %}
-            <div class="row">
-                <small>{{ article.created_time|slice:"0:16" }} </small>
+            <div class="row unit-row">
+                <small class="date">{{ article.created_time|slice:"0:16" }} </small>
                 <a href="{{article.url}}" target="_blank">
                     <h6>{{ article.header }}</h6>
                 </a>

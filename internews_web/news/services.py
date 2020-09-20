@@ -1,5 +1,8 @@
-from django.db.models import Q
 from logging import getLogger
+from datetime import timedelta
+
+from django.db.models import Q
+from django.utils import timezone
 
 from .models import Country, Media, Article
 from translations.models import Language, TranslatedHeader
@@ -24,6 +27,28 @@ def save_article(article_url: str, article_header: str, locator_name: str):
         article, _ = Article.objects.get_or_create(media=media,
                                                    url=url_parser.get_absolute_url(),
                                                    defaults={'header': header})
+
+
+def get_serialized_countries() -> list:
+    serialized_countries = []
+    countries = Country.objects.all()
+    for country in countries:
+        serialized_country = CountrySerializer(country).data
+        serialized_countries.append(serialized_country)
+
+    medias = Media.objects.select_related('country', 'language', 'website').all()
+    serialized_medias = []
+    for media in medias:
+        serialized_media = MediaSerializer(media).data
+        serialized_medias.append(serialized_media)
+        for country in serialized_countries:
+            if media.country.pk == country['id']:
+                if not 'medias' in country:
+                    country['medias'] = [serialized_media]
+                else:
+                    country['medias'].append(serialized_media)
+
+    return serialized_countries
 
 
 def get_news_data(articles_limit: int, language_code: str) -> list:
@@ -53,24 +78,7 @@ def get_news_data(articles_limit: int, language_code: str) -> list:
     """
     assert articles_limit > 0, "Limit should be positive integer!"
 
-    serialized_countries = []
-    countries = Country.objects.all()
-    for country in countries:
-        serialized_country = CountrySerializer(country).data
-        serialized_countries.append(serialized_country)
-
-    medias = Media.objects.select_related('country', 'language', 'website').all()
-    serialized_medias = []
-    for media in medias:
-        serialized_media = MediaSerializer(media).data
-        serialized_medias.append(serialized_media)
-        for country in serialized_countries:
-            if media.country.pk == country['id']:
-                if not 'medias' in country:
-                    country['medias'] = [serialized_media]
-                else:
-                    country['medias'].append(serialized_media)
-
+    serialized_countries = get_serialized_countries()
     for country in serialized_countries:
         articles = Article.objects \
                    .select_related('header', 'media', 'media__country',
@@ -189,3 +197,16 @@ def get_search_data(search_string: str, language_code: str) -> list:
 
     serialized_articles = ArticleSerializer(articles, many=True).data
     return serialized_articles
+
+
+def cleanup_articles(days):
+    assert days, "Days parameter should be specified!"
+
+    threshold_datetime = timezone.now() - timedelta(days=days)
+    articles_to_delete = Article.objects.filter(
+        created_time__lte=threshold_datetime)
+
+    for article in articles_to_delete:
+        article.header.translations.delete()
+        article.header.delete()
+

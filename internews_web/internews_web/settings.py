@@ -75,7 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n'
+                'django.template.context_processors.i18n',
+                'news.context_processors.navbar_data'
             ],
         },
     },
@@ -197,3 +198,5 @@ LOGGING = {
         }
     },
 }
+
+ARTICLE_EXPIRED_THRESHOLD_DAYS = 10
