@@ -1,9 +1,11 @@
 from logging import getLogger
 
+from django.conf import settings
+
 from internews_web.celery import app
 from .locators import active_locators
 from .parsers import BaseStaticParser
-from .services import save_article
+from .services import save_article, cleanup_articles
 
 logger = getLogger(__name__)
 
@@ -35,3 +37,10 @@ def parse_static_websites():
         logger.error(report_msg)
     else:
         logger.info(report_msg)
+
+
+@app.task
+def remove_old_articles():
+    logger.info("Deleting old articles...")
+    cleanup_articles(settings.ARTICLE_EXPIRED_THRESHOLD_DAYS)
+    logger.info("Articles deleted!")

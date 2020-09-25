@@ -1,16 +1,26 @@
 {% extends "news/base.html" %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <h2 class="search_string">
+<div class="container main-container">
+    <h2 class="search_string main-title">
         Articles containing: "{{ search_string }}"
     </h2>
     {% for article in articles %}
-        <div class="row">
-            <small>{{ article.created_time|slice:"0:16" }} </small>
-            <a href="{{article.url}}" target="_blank">
-                <h6>{{ article.header }}</h6>
-            </a>
+        <div class="row unit-row">
+            <div class="col col-2 col-xl-1 logo-container">
+                <img class="logo" src="{{ article.media.country.flag }}"
+                     title="{{ article.media.country.name }}">
+                <img class="logo" src="{{ article.media.logo }}"
+                     title="{{ article.media.name }}">
+            </div>
+            <div class="col col-2">
+                <small class="date">{{ article.created_time|slice:"0:16" }} </small>
+            </div>
+            <div class="col col-8 col-xl-9">
+                <a href="{{article.url}}" target="_blank">
+                    <h6>{{ article.header }}</h6>
+                </a>
+            </div>
         </div>
     {% endfor %}
 </div>
